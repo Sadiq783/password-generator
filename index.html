@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator</title>
     <link rel="stylesheet" href="index.css">
+
+    <!-- Google Font  -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@200,800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -19,10 +24,12 @@
 
             <section class="output-container" id="output-container">
                 <h2>Generated passwords</h2>
-                <label for="password-output-one">Generated password 1</label>
-                <output id="password-output-one" class="password-output" aria-live="polite"></output>
-                <label for="password-output-two">Generated password 2</label>
-                <output id="password-output-two" class="password-output" aria-live="polite"></output>
+                <div class="output-controls">
+                    <label for="password-output-one" class="sr-only">Generated password 1</label>
+                    <output id="password-output-one" class="password-output" aria-live="polite" tabindex="0"></output>
+                    <label for="password-output-two" class="sr-only">Generated password 2</label>
+                    <output id="password-output-two" class="password-output" aria-live="polite" tabindex="0"></output>
+                </div>
             </section>
         </main>
     </div>
