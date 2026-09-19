@@ -39,6 +39,17 @@ generatePasswordBtn.addEventListener("click", () => {
         lowercaseLettersToggle.checked? lowercaseLetters : [], 
         numbersToggle.checked? numbers : [], 
         symbolsToggle.checked? symbols : [])
+
+    // Show the copy buttons
+    if (passwordOutputOne.textContent && passwordOutputTwo.textContent) {
+        document.querySelectorAll(".copy-button").forEach(copyButton => {
+            copyButton.style.display = "inline-block"
+        })
+    } else {
+        document.querySelectorAll(".copy-button").forEach(copyButton => {
+            copyButton.style.display = "none"
+        })
+    }
     
     
 })
@@ -47,7 +58,6 @@ generatePasswordBtn.addEventListener("click", () => {
 function generatePassword(passwordLen, uppercase = [], lowercase = [], numbers = [], symbols = []) {
     let password = ""
     const arr = [...uppercase, ...lowercase, ...numbers, ...symbols]
-    console.log(arr)
 
     if (!arr.length)
         return password
@@ -61,9 +71,78 @@ function generatePassword(passwordLen, uppercase = [], lowercase = [], numbers =
 
 // Copy password to the clipboard
 outputContainer.addEventListener("click", (e) => {
-    let outputEl = e.target
+    const copyButton = e.target.closest(".copy-button")
+    const outputEl = e.target.closest(".password-output")
 
-    if (outputEl.classList.contains("password-output")) {
-        navigator.clipboard.writeText(outputEl.value)
+    if (copyButton) {
+        copyPassword(document.querySelector(`#${copyButton.dataset.copyTarget}`), copyButton)
+    } else if (outputEl) {
+        const relatedCopyButton = document.querySelector(`[data-copy-target="${outputEl.id}"]`)
+        copyPassword(outputEl, relatedCopyButton)
     }
 })
+
+function copyPassword(outputEl, copyButton) {
+    navigator.clipboard.writeText(outputEl.textContent).then(() => {
+        // Change the tooltip text
+        document.querySelector(".tooltip").textContent = "Copied"
+
+        copyButton.classList.add("is-copied")
+        copyButton.querySelector("i").classList.remove("fa-regular", "fa-copy")
+        copyButton.querySelector("i").classList.add("fa-solid", "fa-check")
+        copyButton.setAttribute("aria-label", "Password copied")
+
+        setTimeout(() => {
+            copyButton.classList.remove("is-copied")
+            copyButton.querySelector("i").classList.remove("fa-solid", "fa-check")
+            copyButton.querySelector("i").classList.add("fa-regular", "fa-copy")
+            copyButton.setAttribute("aria-label", `Copy generated password ${outputEl.id.endsWith("one") ? "1" : "2"}`)
+        }, 2000)
+    })
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    showCopyTooltip()
+})
+
+// Copy Tooltip
+function showCopyTooltip() {
+    const targets = document.querySelectorAll("[class='copy-button']")
+
+    // Create the actual tooltip
+    const tooltip = document.createElement("div")
+    tooltip.classList.add("tooltip")
+    document.body.appendChild(tooltip)
+
+    targets.forEach(target => {
+        target.addEventListener("mouseenter", () => {
+            // Show tooltip
+            tooltip.textContent = "Copy"
+            tooltip.classList.add("visible")
+
+            // Position the tooltip
+            positionTooltip(target, tooltip)
+        })
+
+        // Remove tooltip
+        target.addEventListener("mouseleave", () => {
+            tooltip.classList.remove("visible")
+        })
+    })
+}
+
+function positionTooltip(target, tooltip) {
+    const targetRect = target.getBoundingClientRect()
+    const tooltipRect = tooltip.getBoundingClientRect()
+
+    let positionTop = (targetRect.top + window.scrollY) - (targetRect.height + 20)
+    const positionLeft = (targetRect.left + window.scrollX) + (targetRect.width - tooltipRect.width) / 2
+
+    if (target.dataset.copyTarget === "password-output-two") {
+        positionTop = (targetRect.top + window.scrollY) + (targetRect.height + 8)
+    }
+
+    tooltip.style.top = `${positionTop}px`
+    tooltip.style.left = `${positionLeft}px`
+}
