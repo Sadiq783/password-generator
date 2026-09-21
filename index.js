@@ -12,6 +12,7 @@ const generatePasswordBtn = document.querySelector("#generate-password-btn")
 const passwordOutputOne = document.querySelector("#password-output-one")
 const passwordOutputTwo = document.querySelector("#password-output-two")
 const outputContainer = document.querySelector("#output-container")
+const optionsError = document.querySelector("#options-error")
 
 const uppercaseLettersToggle = document.querySelector("#uppercase-letters-toggle")
 const lowercaseLettersToggle = document.querySelector("#lowercase-letters-toggle")
@@ -23,22 +24,34 @@ const passwordLength = 10
 
 // Generate passwords
 generatePasswordBtn.addEventListener("click", () => {
+    const selectedCharacterSets = [
+        uppercaseLettersToggle.checked ? upperCaseLetters : [],
+        lowercaseLettersToggle.checked ? lowercaseLetters : [],
+        numbersToggle.checked ? numbers : [],
+        symbolsToggle.checked ? symbols : []
+    ]
+
+    if (!selectedCharacterSets.some(characterSet => characterSet.length)) {
+        passwordOutputOne.textContent = ""
+        passwordOutputTwo.textContent = ""
+        optionsError.hidden = false
+        document.querySelectorAll(".copy-button").forEach(copyButton => {
+            copyButton.style.display = "none"
+        })
+        return
+    }
+
+    optionsError.hidden = true
 
     // Password one
     passwordOutputOne.textContent = generatePassword(
         passwordLength, 
-        uppercaseLettersToggle.checked? upperCaseLetters : [], 
-        lowercaseLettersToggle.checked? lowercaseLetters : [], 
-        numbersToggle.checked? numbers : [], 
-        symbolsToggle.checked? symbols : [])
+        ...selectedCharacterSets)
 
     // Password two
     passwordOutputTwo.textContent = generatePassword(
         passwordLength, 
-        uppercaseLettersToggle.checked? upperCaseLetters : [], 
-        lowercaseLettersToggle.checked? lowercaseLetters : [], 
-        numbersToggle.checked? numbers : [], 
-        symbolsToggle.checked? symbols : [])
+        ...selectedCharacterSets)
 
     // Show the copy buttons
     if (passwordOutputOne.textContent && passwordOutputTwo.textContent) {

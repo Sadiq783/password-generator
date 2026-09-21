@@ -207,6 +207,12 @@ label[class="toggle-label"] {
     cursor: pointer;
 }
 
+.options-error {
+    color: #ffb4ab;
+    font-size: 0.875rem;
+    margin: 0.75em 0 0;
+}
+
 .slider {
     position: absolute;
     background-color: #2F3E53;
