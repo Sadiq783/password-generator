@@ -18,9 +18,14 @@ const uppercaseLettersToggle = document.querySelector("#uppercase-letters-toggle
 const lowercaseLettersToggle = document.querySelector("#lowercase-letters-toggle")
 const numbersToggle = document.querySelector("#numbers-toggle")
 const symbolsToggle = document.querySelector("#symbols-toggle")
+const passwordLengthRange = document.querySelector("#password-len-range")
 
-
-const passwordLength = 10
+// Set the password length
+let passwordLength = 8
+passwordLengthRange.addEventListener("input", () => {
+    passwordLength = passwordLengthRange.value
+    document.querySelector("#password-len-value").textContent = passwordLengthRange.value
+})
 
 // Generate passwords
 generatePasswordBtn.addEventListener("click", () => {
