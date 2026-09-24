@@ -275,6 +275,11 @@ input[type="range"] {
     overflow-y: hidden;
 }
 
+input[type="range"]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
 output[id="password-len-value"] {
     font-weight: 900;
     color: var(--color-accent);
