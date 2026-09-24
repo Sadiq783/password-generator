@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root {
@@ -13,6 +15,10 @@
     --color-accent: #0ECD8A;
     --color-action: #09714F;
     --color-error: #FFB4AB;
+
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 32px;
 }
 
 body {
@@ -48,9 +54,13 @@ body {
     border-radius: 5px;
 }
 
+header {
+    margin-bottom: var(--spacing-lg);
+}
+
 h1 {
     font-size: clamp(1.5rem, 3vw, 2rem);
-    margin-bottom: 0.156em;
+    margin-bottom: var(--spacing-sm);
     margin-top: 0;
     font-weight: 800;
 }
@@ -64,7 +74,7 @@ h1 span {
 h2 {
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     font-weight: 200;
-    margin-bottom: 0.625em;
+    margin-bottom: var(--spacing-sm);
 }
 
 .small-text {
@@ -80,8 +90,7 @@ h2 {
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
-    margin: 0.625em 0;
-    margin-bottom: 1.875em;
+    margin-bottom: var(--spacing-md);
 }
 
 .btn:focus-visible {
@@ -97,8 +106,12 @@ h2 {
     filter: brightness(80%);
 }
 
+.control-buttons {
+    margin-bottom: var(--spacing-md);
+}
+
 hr {
-    margin-bottom: 1em;
+    margin-bottom: var(--spacing-lg);
     opacity: 0.2;
 }
 
@@ -187,13 +200,8 @@ hr {
 }
 
 .toggle-container {
-    margin-bottom: 0.6em;
+    margin-bottom: var(--spacing-sm);
 }
-
-.toggle-container:last-child {
-    margin-bottom: 0;
-}
-
 
 input[type="checkbox"] {
     opacity: 0;
@@ -224,7 +232,7 @@ label[class="toggle-label"] {
 .options-error {
     color: var(--color-error);
     font-size: 0.875rem;
-    margin: 0.75em 0 0;
+    margin-bottom: var(--spacing-sm);
 }
 
 .slider {
