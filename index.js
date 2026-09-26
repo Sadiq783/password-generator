@@ -126,9 +126,7 @@ function copyPassword(outputEl, copyButton) {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    showCopyTooltip()
-})
+document.addEventListener("DOMContentLoaded", showCopyTooltip)
 
 // Copy Tooltip
 function showCopyTooltip() {
