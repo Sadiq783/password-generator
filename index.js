@@ -22,10 +22,12 @@ const passwordLengthRange = document.querySelector("#password-len-range")
 
 // Set the password length
 let passwordLength = 8
-passwordLengthRange.addEventListener("input", () => {
+passwordLengthRange.addEventListener("input", handlePasswordLengthInput)
+
+function handlePasswordLengthInput() {
     passwordLength = passwordLengthRange.value
-    document.querySelector("#password-len-value").textContent = passwordLengthRange.value
-})
+    document.querySelector("#password-len-value").textContent = passwordLength
+}
 
 // Generate passwords
 generatePasswordBtn.addEventListener("click", handleGenerateClick)
