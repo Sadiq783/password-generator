@@ -7,30 +7,39 @@ const numbers =
 const symbols = 
 ["~","`","!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","[","}","]",",","|",":",";","<",">",".","?","/"]
 
-
 const generatePasswordBtn = document.querySelector("#generate-password-btn")
 const passwordOutputOne = document.querySelector("#password-output-one")
 const passwordOutputTwo = document.querySelector("#password-output-two")
 const outputContainer = document.querySelector("#output-container")
 const optionsError = document.querySelector("#options-error")
-
 const uppercaseLettersToggle = document.querySelector("#uppercase-letters-toggle")
 const lowercaseLettersToggle = document.querySelector("#lowercase-letters-toggle")
 const numbersToggle = document.querySelector("#numbers-toggle")
 const symbolsToggle = document.querySelector("#symbols-toggle")
 const passwordLengthRange = document.querySelector("#password-len-range")
 
-// Set the password length
 let passwordLength = 8
-passwordLengthRange.addEventListener("input", handlePasswordLengthInput)
+
+function initialize() {
+    passwordLengthRange.addEventListener("input", handlePasswordLengthInput)
+    generatePasswordBtn.addEventListener("click", handleGenerateClick)
+    outputContainer.addEventListener("click", handleOutputClick)
+    showCopyTooltip()
+}
 
 function handlePasswordLengthInput() {
-    passwordLength = passwordLengthRange.value
+    passwordLength = Number(passwordLengthRange.value)
     document.querySelector("#password-len-value").textContent = passwordLength
 }
 
-// Generate passwords
-generatePasswordBtn.addEventListener("click", handleGenerateClick)
+function getSelectedCharacterSets() {
+    return [
+        uppercaseLettersToggle.checked ? upperCaseLetters : [],
+        lowercaseLettersToggle.checked ? lowercaseLetters : [],
+        numbersToggle.checked ? numbers : [],
+        symbolsToggle.checked ? symbols : []
+    ]
+}
 
 function handleGenerateClick() {
     const selectedCharacterSets = getSelectedCharacterSets()
@@ -64,16 +73,6 @@ function handleGenerateClick() {
     }
 }
 
-function getSelectedCharacterSets() {
-    return [
-        uppercaseLettersToggle.checked ? upperCaseLetters : [],
-        lowercaseLettersToggle.checked ? lowercaseLetters : [],
-        numbersToggle.checked ? numbers : [],
-        symbolsToggle.checked ? symbols : []
-    ]
-}
-
-// Generate a random password with a specified length
 function generatePassword(passwordLen, uppercase = [], lowercase = [], numbers = [], symbols = []) {
     let password = ""
     const arr = [...uppercase, ...lowercase, ...numbers, ...symbols]
@@ -92,9 +91,6 @@ function renderPasswords(passwordOne, passwordTwo) {
     passwordOutputOne.textContent = passwordOne
     passwordOutputTwo.textContent = passwordTwo
 }
-
-// Copy password to the clipboard
-outputContainer.addEventListener("click", handleOutputClick)
 
 function handleOutputClick(e) {
     const copyButton = e.target.closest(".copy-button")
@@ -127,10 +123,6 @@ function copyPassword(outputEl, copyButton) {
     })
 }
 
-
-document.addEventListener("DOMContentLoaded", showCopyTooltip)
-
-// Copy Tooltip
 function showCopyTooltip() {
     const targets = document.querySelectorAll("[class='copy-button']")
 
@@ -170,3 +162,5 @@ function positionTooltip(target, tooltip) {
     tooltip.style.top = `${positionTop}px`
     tooltip.style.left = `${positionLeft}px`
 }
+
+initialize()
