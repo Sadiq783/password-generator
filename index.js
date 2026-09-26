@@ -28,7 +28,9 @@ passwordLengthRange.addEventListener("input", () => {
 })
 
 // Generate passwords
-generatePasswordBtn.addEventListener("click", () => {
+generatePasswordBtn.addEventListener("click", handleGenerateClick)
+
+function handleGenerateClick() {
     const selectedCharacterSets = getSelectedCharacterSets()
 
     if (!selectedCharacterSets.some(characterSet => characterSet.length)) {
@@ -58,9 +60,7 @@ generatePasswordBtn.addEventListener("click", () => {
             copyButton.style.display = "none"
         })
     }
-    
-    
-})
+}
 
 function getSelectedCharacterSets() {
     return [
