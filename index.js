@@ -29,12 +29,7 @@ passwordLengthRange.addEventListener("input", () => {
 
 // Generate passwords
 generatePasswordBtn.addEventListener("click", () => {
-    const selectedCharacterSets = [
-        uppercaseLettersToggle.checked ? upperCaseLetters : [],
-        lowercaseLettersToggle.checked ? lowercaseLetters : [],
-        numbersToggle.checked ? numbers : [],
-        symbolsToggle.checked ? symbols : []
-    ]
+    const selectedCharacterSets = getSelectedCharacterSets()
 
     if (!selectedCharacterSets.some(characterSet => characterSet.length)) {
         passwordOutputOne.textContent = ""
@@ -71,6 +66,15 @@ generatePasswordBtn.addEventListener("click", () => {
     
     
 })
+
+function getSelectedCharacterSets() {
+    return [
+        uppercaseLettersToggle.checked ? upperCaseLetters : [],
+        lowercaseLettersToggle.checked ? lowercaseLetters : [],
+        numbersToggle.checked ? numbers : [],
+        symbolsToggle.checked ? symbols : []
+    ]
+}
 
 // Generate a random password with a specified length
 function generatePassword(passwordLen, uppercase = [], lowercase = [], numbers = [], symbols = []) {
