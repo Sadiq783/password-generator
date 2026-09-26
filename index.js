@@ -43,15 +43,10 @@ generatePasswordBtn.addEventListener("click", () => {
 
     optionsError.hidden = true
 
-    // Password one
-    passwordOutputOne.textContent = generatePassword(
-        passwordLength, 
-        ...selectedCharacterSets)
-
-    // Password two
-    passwordOutputTwo.textContent = generatePassword(
-        passwordLength, 
-        ...selectedCharacterSets)
+    renderPasswords(
+        generatePassword(passwordLength, ...selectedCharacterSets),
+        generatePassword(passwordLength, ...selectedCharacterSets)
+    )
 
     // Show the copy buttons
     if (passwordOutputOne.textContent && passwordOutputTwo.textContent) {
@@ -89,6 +84,11 @@ function generatePassword(passwordLen, uppercase = [], lowercase = [], numbers =
     }
     
     return password
+}
+
+function renderPasswords(passwordOne, passwordTwo) {
+    passwordOutputOne.textContent = passwordOne
+    passwordOutputTwo.textContent = passwordTwo
 }
 
 // Copy password to the clipboard
