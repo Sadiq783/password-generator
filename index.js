@@ -92,7 +92,9 @@ function renderPasswords(passwordOne, passwordTwo) {
 }
 
 // Copy password to the clipboard
-outputContainer.addEventListener("click", (e) => {
+outputContainer.addEventListener("click", handleOutputClick)
+
+function handleOutputClick(e) {
     const copyButton = e.target.closest(".copy-button")
     const outputEl = e.target.closest(".password-output")
 
@@ -102,7 +104,7 @@ outputContainer.addEventListener("click", (e) => {
         const relatedCopyButton = document.querySelector(`[data-copy-target="${outputEl.id}"]`)
         copyPassword(outputEl, relatedCopyButton)
     }
-})
+}
 
 function copyPassword(outputEl, copyButton) {
     navigator.clipboard.writeText(outputEl.textContent).then(() => {
